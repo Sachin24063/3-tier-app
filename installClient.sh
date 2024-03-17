@@ -15,7 +15,7 @@ if [ "$1" = '--version' ]; then
 fi
 
 echo "==> Ensuring .bashrc exists and is writable"
-touch ~/.bashrc
+sudo touch ~/.bashrc
 
 echo "==> Installing node version manager (NVM). Version $INSTALL_NVM_VER"
 # Removed if already installed
