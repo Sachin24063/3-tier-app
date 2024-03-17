@@ -1,12 +1,5 @@
 #!/bin/sh
-echo finding dns name
-echo 'ALB_DNS_NAME=${alb_dns}'
-echo "export SERVER_URL=http://${alb_dns}" >> /home/ubuntu/.bashrc
-export SERVER_URL=http://${alb_dns}
-echo $SERVER_URL
-echo "set finished"
 set -e
-pwd
 
 # Run this script like - bash script-name.sh
 
@@ -17,15 +10,13 @@ INSTALL_YARN_VER=1.22.21
 
 # You can pass argument to this script --version 8
 if [ "$1" = '--version' ]; then
-    echo "==> Using specified node version - $2"
-    INSTALL_NODE_VER=$2
+	echo "==> Using specified node version - $2"
+	INSTALL_NODE_VER=$2
 fi
 
 echo "==> Ensuring .bashrc exists and is writable"
-pwd
-touch /home/ubuntu/.bashrc
+touch ~/.bashrc
 
-pwd
 echo "==> Installing node version manager (NVM). Version $INSTALL_NVM_VER"
 # Removed if already installed
 rm -rf ~/.nvm
@@ -34,18 +25,8 @@ rm -rf ~/.nvm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v$INSTALL_NVM_VER/install.sh | bash
 
 echo "export path"
-export NVM_DIR="$([ -z "$${XDG_CONFIG_HOME-}" ] && printf %s "$${HOME}/.nvm" || printf %s "$${XDG_CONFIG_HOME}/nvm")"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-echo 'export NVM_DIR="/home/ubuntu/.nvm"' >> /home/ubuntu/.bashrc
-echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> /home/ubuntu/.bashrc
-
-
-
-. /home/ubuntu/.nvm/
-. /home/ubuntu/.bashrc
-
-
 echo "==> Installing node js version $INSTALL_NODE_VER"
 nvm install $INSTALL_NODE_VER
 
